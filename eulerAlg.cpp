@@ -8,10 +8,10 @@ const int N = 2; //Vector size
 const double dt = 0.1;
 const double final = 4*2*M_PI/w; //final time to finish proccess
 
-void initial_conditions (Eigen::VectorXd & y);
-void time_step(double t, Eigen::VectorXd & y, double dt);
-void print (const double & time, Eigen::VectorXd & y);
-double f (const double & t, const Eigen::VectorXd & y, int idx);
+void initial_conditions (Eigen::VectorXd& y);
+void time_step(double t, Eigen::VectorXd& y, double dt);
+void print (const double & time,const Eigen::VectorXd& y);
+double f (const double & t, const Eigen::VectorXd& y, int idx);
 
 int main()
 {
@@ -29,13 +29,13 @@ int main()
   return 0;  
 }
 
-void initial_conditions (Eigen::VectorXd & y)
+void initial_conditions (Eigen::VectorXd& y)
 {
   y[0] = 0.9876;
   y[1] = 0.0;
 }
 
-void time_step(double t, Eigen::VectorXd & y, double dt)
+void time_step(double t, Eigen::VectorXd& y, double dt)
 {
   Eigen::VectorXd y1 = y;
   for(int ii = 0; ii<=1; ii++){
@@ -43,12 +43,12 @@ void time_step(double t, Eigen::VectorXd & y, double dt)
   }
 }
   
-void print (const double & time, Eigen::VectorXd & y)
+void print (const double & time,const Eigen::VectorXd& y)
 {
   std::cout << time << "\t" << y[0] << "\t" << y[1] << std::endl;
 }
 
-double f (const double & t, Eigen::VectorXd & y, int idx)
+double f (const double & t, const Eigen::VectorXd& y, int idx)
 {
   if (0 == idx){
     return y[1];
