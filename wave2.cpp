@@ -1,11 +1,14 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <vector>
+#include <algorithm>
+#include <cstdlib>
 
-const double dx = 0.01;
-const double dt = 0.00013;
-const double Tf = 1.5;
-const double l = 2;
+const double dx = 0.005;
+const double dt = 0.00006;
+const double Tf = 0.8;
+const double l = 1;
 const double density = 0.01;
 const double tension = 40;
 
@@ -34,25 +37,39 @@ void stepfunction (std::vector <double> &past, std::vector <double> &present, st
 }
 
 void init (std::vector  <double> & past, std::vector  <double> & present, double c1, double c2){
+  std::ofstream ofs ("inicial.txt", std::ofstream::out);
   for (int i = 0; i < past.size(); i++){
     double x = i*dx;
-    if ( x <= 0.8*l){
-      past[i] = (1.25 * x)/l;
-    } else {
-      past[i] = 5.0*(1 - (x/l));
+    if ((0.0 <= x) && (x <= 0.1*l)){
+      past[i] = 0;
+    } else if ((0.1*l < x) && (x<= 0.2*l)){
+      past[i] = ((10*x)-1)*0.005;
+    } else if ((0.2*l < x) && (x <= 0.3*l)){
+      past[i] = ((-10*x)+3)*0.005;
+    } else if ((0.3*l < x) && (x <= 0.7*l)){
+      past[i] = 0;
+    } else if ((0.7*l < x) && (x <= 0.8*l)){
+      past[i] = ((10*x)-7)*0.005;
+    } else if ((0.8*l < x) && (x <= 0.9*l)){
+      past[i] = ((-10*x)+9)*0.005;
+    } else if ((0.9*l < x) && (x <= 1.0*l)){
+      past[i] = 0;
     }
   }
   
   for (int i= 1; i < present.size(); i++){
     present [0] = 0;
     present[i] = past[i]+(1/2)*(pow(c1,2)/pow(c2,2))*(past[i+1]+past[i-1]-2*past[i]);
+    ofs << i*dx << "\t\t" << present[i] << std::endl;
   }
+  ofs.close();
+  
 }
 
 void f( std::vector  <double> & past, std::vector  <double> & present, std::vector  <double> & future, double c1, double c2){
   int M = Tf/dt;
   
-  for(int j = 0; j < M-1; j+=20) //tiempo
+  for(int j = 0; j < M-1; j+=40) //tiempo
     {
       for ( int k = 0; k <= present.size(); k++)
 	{

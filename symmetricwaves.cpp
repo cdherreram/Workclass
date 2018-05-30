@@ -4,7 +4,7 @@
 
 const double dx = 0.01;
 const double dt = 0.00013;
-const double Tf = 1.5;
+const double Tf = 2;
 const double l = 2;
 const double density = 0.01;
 const double tension = 40;
@@ -36,10 +36,10 @@ void stepfunction (std::vector <double> &past, std::vector <double> &present, st
 void init (std::vector  <double> & past, std::vector  <double> & present, double c1, double c2){
   for (int i = 0; i < past.size(); i++){
     double x = i*dx;
-    if ( x <= 0.8*l){
-      past[i] = (1.25 * x)/l;
+    if ( x <= 0.5*l){
+      past[i] = (x/l)*0.01;
     } else {
-      past[i] = 5.0*(1 - (x/l));
+      past[i] = -(x/l)*0.01;
     }
   }
   

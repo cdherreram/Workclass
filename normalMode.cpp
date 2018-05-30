@@ -4,10 +4,11 @@
 
 const double dx = 0.01;
 const double dt = 0.00013;
-const double Tf = 1.5;
+const double Tf = 0.1;
 const double l = 2;
 const double density = 0.01;
 const double tension = 40;
+const double pi = M_PI;
 
 void stepfunction (std::vector <double> &past, std::vector <double> &present, std::vector <double> &future );
 void init (std::vector  <double> & past, std::vector  <double> & present, double c1, double c2);
@@ -36,11 +37,7 @@ void stepfunction (std::vector <double> &past, std::vector <double> &present, st
 void init (std::vector  <double> & past, std::vector  <double> & present, double c1, double c2){
   for (int i = 0; i < past.size(); i++){
     double x = i*dx;
-    if ( x <= 0.8*l){
-      past[i] = (1.25 * x)/l;
-    } else {
-      past[i] = 5.0*(1 - (x/l));
-    }
+    past[i] = 0.001*std::sin(5*pi*x);
   }
   
   for (int i= 1; i < present.size(); i++){
